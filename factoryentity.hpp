@@ -39,7 +39,7 @@ class Factoryentity{
             std::print("The floor device {} has been removed", name);
         }
 
-        virtual void increase_tick()=0;
+        virtual void increase_tick()=0;  // virtual functions set to 0, meaning the other derived module MUST use this function or else wont compile 
         virtual void event(EntityEvent event_type)=0;
 
         //getters
@@ -62,6 +62,5 @@ class Factoryentity{
         bool is_active(bool activestate){
             is_active=activestate;
         }
-
 
 };
