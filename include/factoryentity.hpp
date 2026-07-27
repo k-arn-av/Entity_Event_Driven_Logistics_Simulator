@@ -46,16 +46,16 @@ class Factoryentity{
         virtual void event(EntityEvent event_type)=0;
 
         //getters
-        int id()const{
+        int get_id()const{
             return id;// or this->id
         }
-        const std::string name() const{
+        const std::string get_name() const{
             return name;
         }
-        entityState state()const{
+        entityState get_state()const{
             return state;
         }
-        bool is_active()const{
+        bool get_is_active()const{
             return is_active;
         }
         //setters
