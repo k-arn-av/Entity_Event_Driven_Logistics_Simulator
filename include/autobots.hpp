@@ -14,7 +14,7 @@ class autobots: public Factoryentity{
         void decrease_charge(double amount);//decreases charge internally. No need for user or the bots to manipulate the drain. Only class actions can access it
 
     public:
-        autobots(int initial_charge, const std::string& name): Factoryentity(name), charge(initial_charge){
+        autobots(double initial_charge, const std::string& name): Factoryentity(name), charge(initial_charge){
             ++total_botscount;
         }
         ~autobots(){
