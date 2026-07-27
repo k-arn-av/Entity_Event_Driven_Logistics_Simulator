@@ -1,3 +1,4 @@
+#pragma once
 #include "factoryentity.hpp"
 
 class autobots: public Factoryentity{
