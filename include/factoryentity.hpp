@@ -59,10 +59,10 @@ class Factoryentity{
             return is_active;
         }
         //setters
-        entityState state(entityState newstate){
+        entityState set_state(entityState newstate){
             state=newstate;
         }
-        bool is_active(bool activestate){
+        bool set_is_active(bool activestate){
             is_active=activestate;
         }
 
