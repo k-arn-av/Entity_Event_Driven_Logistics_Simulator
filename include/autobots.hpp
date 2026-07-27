@@ -6,9 +6,17 @@ class autobots: public Factoryentity{
     private:
         double charge;
         double max_charge=100;
+
+        //task attributes with ticks
         bool has_active_task=false;
         int progress_ticks=0;
         int required_ticks=0;
+
+        //movement ticks
+        int travel_ticks=0;
+        int required_charging_travel_ticks=5;
+        int required_maintainance_travel_ticks=6;
+
         inline static int total_botscount=0;
 
         void decrease_charge(double amount);//decreases charge internally. No need for user or the bots to manipulate the drain. Only class actions can access it
