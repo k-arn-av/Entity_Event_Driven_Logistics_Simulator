@@ -29,20 +29,4 @@ class processinghub:public Factoryentity{
             size_t getInventorycount(){return package_inventory.size();}
             size_t getHubId(){return id;}
 
-
-
-
-
-
-
-
-
-            
-
-
-
-        
-
-    
-
 };
