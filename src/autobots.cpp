@@ -112,7 +112,7 @@ void autobots::increase_tick(){ // used by manager class to act as a universal c
             break;
     }
 }
-
+// change entity internal attribute under different events
 void autobots::event(EntityEvent event_type){
     switch (event_type){
 
