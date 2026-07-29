@@ -13,9 +13,9 @@ class autobots: public Factoryentity{
         int required_ticks=0;
 
         //movement ticks
-        int travel_ticks=0;
-        int required_charging_travel_ticks=5;
-        int required_maintainance_travel_ticks=6;
+        size_t travel_ticks=0;
+        size_t required_charging_travel_ticks=5;
+        size_t required_maintainance_travel_ticks=6;
 
         inline static int total_botscount=0;
 
@@ -40,4 +40,4 @@ class autobots: public Factoryentity{
         double get_charge()const{
             return charge;
         }
-};      
+};  

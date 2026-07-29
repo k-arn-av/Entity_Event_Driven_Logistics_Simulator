@@ -28,7 +28,7 @@ enum class EntityEvent {
 class Factoryentity{
 
     protected:
-        int id;
+        size_t id;
         std::string name;
         bool is_active;
         entityState state;
