@@ -37,7 +37,11 @@ class autobots: public Factoryentity{
         // and changes the internal attributes like state, is_active, has_active_task, required ticks
 
         //getters and setters
-        double get_charge()const{
-            return charge;
-        }
+        double get_charge()const{return charge;}
+
+        bool get_has_active_task()const{return has_active_task;}
+
+        void set_charge(double newCharge){charge=newCharge;}
+
+
 };  
