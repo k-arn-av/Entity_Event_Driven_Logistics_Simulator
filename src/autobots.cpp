@@ -1,5 +1,6 @@
 #include "autobots.hpp"
 
+//method to decrease and update state
 void autobots::decrease_charge(double amount){
 
     charge-=amount;
@@ -10,7 +11,7 @@ void autobots::decrease_charge(double amount){
         set_state(entityState::SHUTDOWN);
         set_is_active(false);
     }
-    else if (charge<15.0)
+    else if (charge<15.0 && get_state()!= entityState::SEEKING_CHARGER)
     {
         set_state(entityState::SEEKING_CHARGER);
     }
@@ -24,7 +25,7 @@ void autobots::start_packaging_task(int total_duration_ticks){//can only start t
         std::print("{} is busy and cannot start a new task\n", get_name());
         return;
     }
-
+    progress_ticks=0;
     required_ticks=total_duration_ticks;
     has_active_task=true;
     set_state(entityState::RUNNING);
@@ -41,6 +42,8 @@ void autobots::increase_tick(){ // used by manager class to act as a universal c
             has_active_task=true;
             progress_ticks+=1;
             decrease_charge(1.5); 
+
+            if (get_state() != entityState::RUNNING) {break;}
 
             //check if task completed
             if (progress_ticks>=required_ticks){
