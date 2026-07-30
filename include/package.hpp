@@ -28,6 +28,7 @@ class package{
         package_status status;
         size_t priority=0;
         double weight;
+        std::string package_destinationID;
 
         // Helper method to determine priority automatically from Content_type
         static size_t calculate_priority(Content_type type);
@@ -38,8 +39,8 @@ class package{
     
     public:
 
-        package(const std::string& pN,const std::string& sN, const std::string& rN, double w, const Content_type cont)
-        : package_name(pN), sender_name(sN), receiver_name(rN), weight(w), content_type(cont){
+        package(const std::string& pN,const std::string& sN, const std::string& rN, double w, const Content_type cont, std::string& destinationid)
+        : package_name(pN), sender_name(sN), receiver_name(rN), weight(w), content_type(cont), package_destinationID(destinationid){
 
             status=package_status::ORDER_RECEIVED;
             package_id=generateID();
@@ -51,8 +52,9 @@ class package{
         std::string getID()const {return package_id;}
         Content_type getContentType() const {return content_type;}
         package_status getStatus() const {return status;}
-        double getWeight()const{return weight;}
-        size_t getPriority()const{return priority;}
+        double getWeight()const {return weight;}
+        size_t getPriority()const {return priority;}
+        std::string getDestinationID()const {return package_destinationID;}
 
         //setters
         void setContentType(const Content_type& newtype){
@@ -63,6 +65,7 @@ class package{
         void setWeight(double newWeight){weight=newWeight;}
 
         void set_priority(size_t newPriority){priority=newPriority;}
+
         
         //method that gives package summary
         std::string getSummary()const;
