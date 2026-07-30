@@ -4,6 +4,7 @@
 #include <functional>
 #include <unordered_map>
 #include <memory>
+
 class processinghub:public Factoryentity{
 
     private:
@@ -19,14 +20,21 @@ class processinghub:public Factoryentity{
         public:
             processinghub(const std::string& n, processTechnique tech): Factoryentity(n), technique(tech){}
 
-            void increase_tick()override;
+            void increase_tick() override;
 
-            void receive_package(const package& pkg);
+            void event(EntityEvent event_type) override;
+
+            void receive_package(std::unique_ptr<package> pkg);//receives the package object through pointer to give ownership
 
             std::unique_ptr<package> dispatch_package(const std::string& pkgID);// removes package from inventory and transfers the ownership of the object
 
-            //getters
+            //getters and setters
             size_t getInventorycount(){return package_inventory.size();}
+
             size_t getHubId(){return id;}
+
+            bool get_has_power(){return has_power;}
+
+            void set_has_power(bool newBool){has_power=newBool;}
 
 };
