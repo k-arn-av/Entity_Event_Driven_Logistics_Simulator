@@ -11,7 +11,7 @@ enum class Content_type{
 
 enum class package_status{
     ORDER_RECEIVED=1,
-    WAITING_PROCESSING=2,
+    PROCESSING=2,
     PROCESSED=3,
     IN_TRANSIT=4,
     DELIVERED=5   
@@ -66,5 +66,5 @@ class package{
         
         //method that gives package summary
         std::string getSummary()const;
-
+ 
 };
