@@ -10,10 +10,12 @@ void autobots::decrease_charge(double amount){
         charge=0.0;
         set_state(entityState::SHUTDOWN);
         set_is_active(false);
+        std::print("{} shut down from low charge.\n", get_name());
     }
     else if (charge<15.0 && get_state()!= entityState::SEEKING_CHARGER)
     {
         set_state(entityState::SEEKING_CHARGER);
+        std::print("{} seeking charger.\n", get_name());
     }
 }
 
@@ -26,6 +28,7 @@ void autobots::decrease_repair(double amount){
         repair_amount=0.0;
         set_state(entityState::FAULTED);
         set_is_active(false);
+        std::print("{} faulted from low repair.\n", get_name());
     }
 }
 
@@ -38,6 +41,7 @@ void autobots::repair(double amount){
         if (get_state() == entityState::UNDER_MAINTENANCE || get_state() == entityState::SEEKING_MAINTENANCE)
         {
             set_state(entityState::IDLE);
+            std::print("{} repaired and returned to idle.\n", get_name());
         }
     }
 }
@@ -58,6 +62,7 @@ void autobots::start_packaging_task(int total_duration_ticks){//can only start t
     required_ticks=total_duration_ticks;
     has_active_task=true;
     set_state(entityState::RUNNING);
+    std::print("{} started a packaging task.\n", get_name());
     
 }//bot has started a task, and is running
 
@@ -82,6 +87,7 @@ void autobots::increase_tick(){ // used by manager class to act as a universal c
                 progress_ticks=0;
                 required_ticks=0;
                 set_state(entityState::IDLE);
+                std::print("{} completed its task.\n", get_name());
 
             }
 
@@ -151,6 +157,7 @@ void autobots::event(EntityEvent event_type){
         case EntityEvent::EMERGENCY_STOP:
             has_active_task=false;
             set_state(entityState::FAULTED);
+            std::print("{} entered fault state.\n", get_name());
             break;
     
         case EntityEvent::CANCEL_TASK:
@@ -158,27 +165,32 @@ void autobots::event(EntityEvent event_type){
             progress_ticks=0;
             required_ticks=0;
             set_state(entityState::IDLE);
+            std::print("{} task cancelled.\n", get_name());
             break;
         
         case EntityEvent::CLEAR_FAULT:
             if (get_state()==entityState::FAULTED){
                 set_state(entityState::IDLE);
+                std::print("{} fault cleared.\n", get_name());
             }
             break;
         
         case EntityEvent::SENSOR_OBSTRUCTION:
             set_state(entityState::FAULTED);
+            std::print("{} faulted by obstruction.\n", get_name());
             break;
         
         case EntityEvent::PAUSE_WORK:
             if (get_state()==entityState::RUNNING){
                 set_state(entityState::PAUSED);
+                std::print("{} paused.\n", get_name());
             }
             break;  
             
         case EntityEvent::RESUME_WORK:
             if (get_state()==entityState::PAUSED){
             set_state(entityState::RUNNING);
+            std::print("{} resumed.\n", get_name());
             }
             break;
 

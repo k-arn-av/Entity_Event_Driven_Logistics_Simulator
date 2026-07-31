@@ -36,12 +36,14 @@ void processinghub::increase_tick(){
     case entityState::RUNNING:
 
         if (package_inventory.empty()){return;}// no package to process
+        std::print("{} is processing a package.\n", get_name());
 
         ++progress_ticks;
 
         if (progress_ticks>=required_ticks){
             for (auto& [id,pkg]: package_inventory){// use auto& [key,value] to replace dict.items from py
                 if (pkg != nullptr && pkg->getStatus()== package_status::PROCESSING){
+                std::print("{} completed processing.\n", get_name());
                     technique(*pkg); // the function attribute for each processing hub that dictates its own function that modifies package object
                     pkg->setStatus(package_status::PROCESSED);
                 }

@@ -5,20 +5,11 @@
 void factorymanager::tick(){
 
     ++current_tick;
+    std::print("Tick {} started.\n", current_tick);
 
     for (auto& entity:entities){
         entity->increase_tick();
     }
-}
-
-template <typename T, typename... Args>
-T& factorymanager::create_entity(Args&&... args){
-
-    auto entity=std::make_unique<T> (std::forward<Args>(args)...); //allocates any entity object created to heap using make_unique
-    T& ref= *entity; //saving reference of the object to give access later
-    entities.push_back(std::move(entity)); //appends the entity by giving complete ownership to the vector element(unique ptr) and making entity nullptr
-    return ref;
-
 }
 
 // Activates every entity's event type internal condition mechanics 
@@ -27,12 +18,13 @@ void factorymanager::broadcast_event(EntityEvent event_type){
     for (auto& entity:entities){
         entity->event(event_type);
     }
+    std::print("Broadcasted event to all entities.\n");
 }
 
 void factorymanager::route_package(std::unique_ptr<package> pkg){
 
     if (!pkg){
-        std::cout << "[MANAGER] Warning: Attempted to route a null package.\n";
+        std::print("Manager: null package.\n");
         return;
     }
     std::string destinationID= pkg->getDestinationID();
@@ -53,6 +45,7 @@ void factorymanager::route_package(std::unique_ptr<package> pkg){
 
             if (hub) {
                 hub->receive_package(std::move(pkg)); // transfers ownership to the receiving hub
+                std::print("Package routed to {}.\n", destinationID);
                 return;
             }
         }
