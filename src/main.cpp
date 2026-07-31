@@ -62,5 +62,6 @@ int main(){
         //call universal tick to increase tick over time
         manager.tick();
     }
+    std::cout<< "SIMULATION COMPLETED";
     return 0;
 }
