@@ -12,14 +12,13 @@ class processinghub:public Factoryentity{
         using processTechnique=std::function<void(package&)>; //used alias processTechnique to avoid defining the function repeatedly
 
         processTechnique technique;
-        std::string destination_ID;
         size_t required_ticks=0;
         size_t progress_ticks=0;
         bool has_power=true;
         std::unordered_map<std::string, std::unique_ptr<package>> package_inventory;//assigning an unordered map to store packages by their id
         
         public:
-            processinghub(const std::string& n, processTechnique tech, std::string& destination): Factoryentity(n), technique(tech), destination_ID(destination){}
+            processinghub(const std::string& n, processTechnique tech): Factoryentity(n), technique(tech){}
 
             void increase_tick() override;
 
@@ -35,8 +34,6 @@ class processinghub:public Factoryentity{
             size_t getHubId()const {return id;}
 
             bool get_has_power()const {return has_power;}
-
-            std::string getDestinationId()const {return destination_ID;}
 
             void set_has_power(bool newBool){has_power=newBool;}
 

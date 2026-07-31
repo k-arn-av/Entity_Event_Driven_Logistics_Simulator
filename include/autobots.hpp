@@ -7,6 +7,8 @@ class autobots: public Factoryentity{
         double charge;
         double max_charge=100;
 
+        double repair_amount;
+        double full_repair=100;
         //task attributes with ticks
         bool has_active_task=false;
         int progress_ticks=0;
@@ -20,9 +22,10 @@ class autobots: public Factoryentity{
         inline static int total_botscount=0;
 
         void decrease_charge(double amount);//decreases charge internally. No need for user or the bots to manipulate the drain. Only class actions can access it
+        void decrease_repair(double amount);//decreases repair internally. Only class actions can access it
 
     public:
-        autobots(double initial_charge, const std::string& name): Factoryentity(name), charge(initial_charge){
+        autobots(double initial_charge, double initial_condition, const std::string& name): Factoryentity(name), charge(initial_charge), repair_amount(initial_condition){
             ++total_botscount;
         }
         ~autobots(){
@@ -36,8 +39,15 @@ class autobots: public Factoryentity{
         void start_packaging_task(int total_duration_ticks);// sets the total duration for each packaging task 
         // and changes the internal attributes like state, is_active, has_active_task, required ticks
 
+        void repair(double amount);
+        bool is_fully_repaired() const;
+
         //getters and setters
         double get_charge()const{return charge;}
+        
+        double get_maxCharge()const{return max_charge;}
+
+        double get_repair()const{return repair_amount;}
 
         bool get_has_active_task()const{return has_active_task;}
 

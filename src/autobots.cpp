@@ -17,6 +17,35 @@ void autobots::decrease_charge(double amount){
     }
 }
 
+void autobots::decrease_repair(double amount){
+
+    repair_amount-=amount;
+
+    if (repair_amount<=0.0)
+    {
+        repair_amount=0.0;
+        set_state(entityState::FAULTED);
+        set_is_active(false);
+    }
+}
+
+void autobots::repair(double amount){
+    repair_amount += amount;
+
+    if (repair_amount >= full_repair)
+    {
+        repair_amount = full_repair;
+        if (get_state() == entityState::UNDER_MAINTENANCE || get_state() == entityState::SEEKING_MAINTENANCE)
+        {
+            set_state(entityState::IDLE);
+        }
+    }
+}
+
+bool autobots::is_fully_repaired() const{
+    return repair_amount >= full_repair;
+}
+
 void autobots::start_packaging_task(int total_duration_ticks){//can only start task if state is IDLE
 
     if (get_state()!=entityState::IDLE)
@@ -91,7 +120,7 @@ void autobots::increase_tick(){ // used by manager class to act as a universal c
             set_is_active(false);
             break;
         
-        case entityState::SEEKING_MAINTAINANCE:
+        case entityState::SEEKING_MAINTENANCE:
 
             has_active_task=false;
             travel_ticks+=1;
@@ -101,11 +130,11 @@ void autobots::increase_tick(){ // used by manager class to act as a universal c
 
             if (travel_ticks>=required_maintainance_travel_ticks){
                 travel_ticks=0;
-                set_state(entityState::UNDER_MAINTAINANCE);
+                set_state(entityState::UNDER_MAINTENANCE);
             }
             break;
         
-        case entityState::UNDER_MAINTAINANCE:
+        case entityState::UNDER_MAINTENANCE:
         case entityState::IDLE:
         case entityState::FAULTED:
         break;

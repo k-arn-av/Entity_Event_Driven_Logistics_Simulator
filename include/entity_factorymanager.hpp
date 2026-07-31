@@ -1,6 +1,9 @@
 #pragma once
 #include "autobots.hpp"
 #include "processinghub.hpp"
+#include <memory>
+#include <utility>
+#include <vector>
 
 class factorymanager{
     private:
@@ -13,7 +16,7 @@ class factorymanager{
 
         //automates object memory allocation to heap, and points each using unique ptrs
         template <typename T, typename... Args>
-        T& factorymanager::create_entity(Args&&... args){
+        T& create_entity(Args&&... args){
 
             auto entity=std::make_unique<T> (std::forward<Args>(args)...); //allocates any entity object created to heap using make_unique
             T& ref= *entity; //saving reference of the object to give access later
