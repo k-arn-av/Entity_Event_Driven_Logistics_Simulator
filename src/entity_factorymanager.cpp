@@ -4,7 +4,7 @@
 
 void factorymanager::tick() {
     ++current_tick;
-    std::print("Tick {} started.\n", current_tick);
+    print_fmt("Tick {} started.\n", current_tick);
 
     //Tick the standalone warehouse if configured
     if (factory_warehouse) {
@@ -33,28 +33,28 @@ void factorymanager::broadcast_event(EntityEvent event_type) {
             entity->event(event_type);
         }
     }
-    std::print("Broadcasted event to all entities and warehouse.\n");
+    print_fmt("Broadcasted event to all entities and warehouse.\n");
 }
 
 void factorymanager::route_package(std::unique_ptr<package> pkg) {
     if (!pkg) {
-        std::print("Manager: null package.\n");
+        print_fmt("Manager: null package.\n");
         return;
     }
 
     std::string destinationID = pkg->getDestinationID();
 
     if (destinationID.empty()) {
-        std::print("[MANAGER] Error: Package '{}' has no destination assigned\n", pkg->getID());
+        print_fmt("[MANAGER] Error: Package '{}' has no destination assigned\n", pkg->getID());
         return;
     }
 
     //Check 1: Route to Standalone Warehouse
     if (factory_warehouse && factory_warehouse->get_name() == destinationID) {
         if (factory_warehouse->receive_package(std::move(pkg))) {
-            std::print("Package routed to Warehouse ({}).\n", destinationID);
+            print_fmt("Package routed to Warehouse ({}).\n", destinationID);
         } else {
-            std::print("[MANAGER] Error: Warehouse '{}' rejected package.\n", destinationID);
+            print_fmt("[MANAGER] Error: Warehouse '{}' rejected package.\n", destinationID);
         }
         return;
     }
@@ -70,13 +70,13 @@ void factorymanager::route_package(std::unique_ptr<package> pkg) {
 
             if (hub) {
                 hub->receive_package(std::move(pkg)); // transfers ownership to receiving hub
-                std::print("Package routed to {}.\n", destinationID);
+                print_fmt("Package routed to {}.\n", destinationID);
                 return;
             }
         }
     }
 
-    std::print("[MANAGER] Error: Destination '{}' not found\n", destinationID);
+    print_fmt("[MANAGER] Error: Destination '{}' not found\n", destinationID);
 }
 
  

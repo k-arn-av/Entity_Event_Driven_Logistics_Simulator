@@ -74,9 +74,10 @@ class maintenanceStation:public serviceStation{
         double repair_per_tick=15.40; //repair health restored per tick
         double diagnostic_precision;  //Multiplier/probability of identifying critical failures (e.g., 0.95 = 95%)
         bool auto_reboot_enabled;     //automatically reboot/reset bot software upon completion
+        size_t parts_inventory;
 
     public:
-        maintenanceStation(std::string name, size_t cap, size_t initial_parts = 100): serviceStation(std::move(name), cap, serviceType::MAINTENANCE){}
+        maintenanceStation(std::string name, size_t cap, size_t initial_parts = 100): serviceStation(std::move(name), cap, serviceType::MAINTENANCE),parts_inventory(initial_parts){}
 
         void increase_tick() override;
 
@@ -88,3 +89,4 @@ class maintenanceStation:public serviceStation{
 
 
 };
+

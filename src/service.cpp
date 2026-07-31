@@ -6,23 +6,30 @@ void serviceStation::add_bots_to_queue(autobots* bot){
     if (!bot){return;}
 
     if (service_queue.size()>=total_capacity){
-        std::print("Queue full. Bot not added.\n");
+        print_fmt("Queue full. Bot not added.\n");
         return; 
     }
     service_queue.push_back(bot);
-    std::print("{} queued for service.\n", bot->get_name());
+    print_fmt("{} queued for service.\n", bot->get_name());
 
 }
 
 void serviceStation::release_bot_from_queue(autobots* bot){
     if (!bot){
-        std::print("Service: invalid bot release.\n");
+        print_fmt("Service: invalid bot release.\n");
         return;
     }
     //find the bot in the vector and remove it
     auto it= std::find(service_queue.begin(),service_queue.end(),bot);
-    service_queue.erase(it);
-    std::print("{} released from service queue.\n", bot->get_name());
+    if (it != service_queue.end()) {
+        service_queue.erase(it);
+        print_fmt("{} released from service queue.\n", bot->get_name());
+    }
+}
+
+void serviceStation::increase_tick() {
+    // Base service station does not perform ticking directly.
+    // Derived station types implement actual per-tick behavior.
 }
 
 void serviceStation::event(EntityEvent eventtype) {
@@ -30,23 +37,23 @@ void serviceStation::event(EntityEvent eventtype) {
         case EntityEvent::EMERGENCY_STOP:
             set_has_power(false);
             set_is_servicing(false);
-            std::print("{} stopped for emergency.\n", get_name());
+            print_fmt("{} stopped for emergency.\n", get_name());
             break;
 
         case EntityEvent::CLEAR_FAULT:
             set_has_power(true);
-            std::print("{} power restored.\n", get_name());
+            print_fmt("{} power restored.\n", get_name());
             break;
 
         case EntityEvent::PAUSE_WORK:
             set_is_servicing(false);
-            std::print("{} paused.\n", get_name());
+            print_fmt("{} paused.\n", get_name());
             break;
 
         case EntityEvent::RESUME_WORK:
             if (get_has_power() && !service_queue.empty()) {
                 set_is_servicing(true);
-                std::print("{} resumed.\n", get_name());
+                print_fmt("{} resumed.\n", get_name());
             }
             break;
 
@@ -56,7 +63,7 @@ void serviceStation::event(EntityEvent eventtype) {
         case EntityEvent::CANCEL_TASK:
             // Optional: release_all_bots() or halt current operation
             set_is_servicing(false);
-            std::print("{} cancelled current task.\n", get_name());
+            print_fmt("{} cancelled current task.\n", get_name());
             break;
     }
 }
@@ -73,7 +80,7 @@ void chargingStation::increase_tick(){
     if (!get_has_power() || service_queue.empty()) {
         set_is_charging(false);
         set_is_servicing(false);
-        std::print("{} idle: no charging work.\n", get_name());
+        print_fmt("{} idle: no charging work.\n", get_name());
         return;
     }
     set_is_charging(true);
@@ -98,7 +105,7 @@ void chargingStation::increase_tick(){
     if (service_queue.empty()) {
         set_is_servicing(false);
         set_is_charging(false);
-        std::print("{} charging queue cleared.\n", get_name());
+        print_fmt("{} charging queue cleared.\n", get_name());
     }
 }
 
@@ -109,7 +116,7 @@ void maintenanceStation::increase_tick() {
     if (!get_has_power() || service_queue.empty()) {
         set_is_servicing(false);
         set_is_repairing(false);
-        std::print("{} idle: no repair work.\n", get_name());
+        print_fmt("{} idle: no repair work.\n", get_name());
         return;
     }
 
@@ -126,10 +133,10 @@ void maintenanceStation::increase_tick() {
 
         // Check if bot health is fully restored
         if (bot->is_fully_repaired()) {
-            std::print("{}: Bot {} repaired.\n", get_name(), bot->get_name());
+            print_fmt("{}: Bot {} repaired.\n", get_name(), bot->get_name());
             
             if (auto_reboot_enabled) {
-                std::print("{}: Rebooting {}.\n", get_name(), bot->get_name());
+                print_fmt("{}: Rebooting {}.\n", get_name(), bot->get_name());
             }
 
             release_bot_from_queue(bot);
@@ -140,6 +147,6 @@ void maintenanceStation::increase_tick() {
     if (service_queue.empty()) {
         set_is_servicing(false);
         set_is_repairing(false);
-        std::print("{} repair queue cleared.\n", get_name());
+        print_fmt("{} repair queue cleared.\n", get_name());
     }
 }

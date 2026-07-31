@@ -2,7 +2,24 @@
 
 #include<iostream>
 #include<string>
-#include<print>
+#include<format>
+
+inline void print_fmt(const std::string& text) {
+    std::cout << text;
+}
+
+inline void print_fmt(std::string_view text) {
+    std::cout << text;
+}
+
+inline void print_fmt(const char* text) {
+    std::cout << text;
+}
+
+template<typename... Args>
+inline void print_fmt(const std::format_string<Args...>& fmt, Args&&... args) {
+    std::cout << std::format(fmt, std::forward<Args>(args)...);
+}
 
 enum class entityState{
     IDLE=1,                //READY TO WORK, > 15% CHARGE, NO TASK STARTED
@@ -40,9 +57,10 @@ class Factoryentity{
             id=total_count;
             name=given_name + "_" + std::to_string(id);
         }// name: bot_1 , status:IDLE, id: 1, total count=1, is_active=true.
+        
         virtual ~Factoryentity(){
             --total_count;
-            std::print("The floor device {} has been removed", name);
+            print_fmt("The floor device {} has been removed", name);
         }
 
         virtual void increase_tick()=0;  // virtual functions set to 0, meaning the other derived module MUST use this function or else wont compile 
@@ -62,10 +80,10 @@ class Factoryentity{
             return is_active;
         }
         //setters
-        entityState set_state(entityState newstate){
+        void set_state(entityState newstate){
             state=newstate;
         }
-        bool set_is_active(bool activestate){
+        void set_is_active(bool activestate){
             is_active=activestate;
         }
 

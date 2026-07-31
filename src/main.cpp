@@ -9,7 +9,7 @@
 
 //each hub object has its own function
 void package_barcode(package& pkg){
-    std::print(" HUB Package Scanner scanning and labeling package: {}\n", pkg.getID());
+    print_fmt(" HUB Package Scanner scanning and labeling package: {}\n", pkg.getID());
 }
 
 int main(){
@@ -22,7 +22,7 @@ int main(){
     manager.set_warehouse(std::move(Warehouse));
 
     //Create a package
-    auto pkg = std::make_unique<package>("Creative Tools", "ArnavK", "Karnav", 47, "Package Labeler");
+    auto pkg = std::make_unique<package>("Creative Tools", "ArnavK", "Karnav", 47, Content_type::SOLID_NON_FOOD, "Package Labeler");
 
     //create factory entities with the template 
 
@@ -44,17 +44,17 @@ int main(){
 
         //trigger a system event at tick 6 and 10 to test broadcasting mechanics
         if (tick==6){
-            std::print("\n TRIGGERING SYSTEM EVENT: EMERGENCY STOP \n");
+            print_fmt("\n TRIGGERING SYSTEM EVENT: EMERGENCY STOP \n");
             manager.broadcast_event(EntityEvent::EMERGENCY_STOP);
         }
         if (tick==10){
-            std::print("\n TRIGGERING SYSTEM EVENT: CLEAR FAULT & RESUME \n");
+            print_fmt("\n TRIGGERING SYSTEM EVENT: CLEAR FAULT & RESUME \n");
             manager.broadcast_event(EntityEvent::CLEAR_FAULT);
             manager.broadcast_event(EntityEvent::RESUME_WORK);
         }
 
         //route package created earlier to Package Scanner at tick 11
-        if (tick=11){
+        if (tick==11){
             pkg->setDestinationID("Package Scanner");
             manager.route_package(std::move(pkg));
         }

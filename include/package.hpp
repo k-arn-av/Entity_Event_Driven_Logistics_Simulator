@@ -6,7 +6,8 @@ enum class Content_type{
     SOLID_NON_FOOD=2,
     PROCESSED_FOOD=3,
     PROCESSED_DRINK=4,
-    MEDICINE_OR_CHEMICALS=5
+    MEDICINE_OR_CHEMICALS=5,
+    STANDARD=6
 };
 
 enum class package_status{
@@ -23,11 +24,11 @@ class package{
         std::string package_name;
         std::string sender_name;
         std::string receiver_name;
-        std::string package_id;
+        double weight;
         Content_type content_type;
+        std::string package_id;
         package_status status;
         size_t priority=0;
-        double weight;
         std::string package_destinationID;
 
         // Helper method to determine priority automatically from Content_type
@@ -38,7 +39,7 @@ class package{
             
     
     public:
-        package(const std::string& pN,const std::string& sN, const std::string& rN, double w, const Content_type cont, std::string& destinationid)
+        package(const std::string& pN,const std::string& sN="Unknown", const std::string& rN="Unknown", double w= 1.0, const Content_type cont =Content_type::STANDARD, const std::string& destinationid="Unassigned")
         : package_name(pN), sender_name(sN), receiver_name(rN), weight(w), content_type(cont), package_destinationID(destinationid){
 
             status=package_status::ORDER_RECEIVED;
