@@ -9,7 +9,7 @@ An object-oriented, event-driven C++23 simulation engine designed to model and m
                          |        main.cpp        |
                          +-----------+------------+
                                      |
-                         +------------------------+
+                         +-----------v------------+
                          | entity_factorymanager  |
                          +-----------+------------+
                                      |
