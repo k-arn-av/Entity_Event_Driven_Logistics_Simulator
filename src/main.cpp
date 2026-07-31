@@ -3,7 +3,6 @@
 #include "entity_factorymanager.hpp"
 #include "package.hpp"
 #include "warehouse.hpp"
-#include "autobots.hpp"
 #include "processinghub.hpp"
 #include "service.hpp"
 
@@ -62,6 +61,6 @@ int main(){
         //call universal tick to increase tick over time
         manager.tick();
     }
-    std::cout<< "SIMULATION COMPLETED";
+    std::cout<< "\nSIMULATION COMPLETED\n";
     return 0;
 }
