@@ -60,7 +60,7 @@ class Factoryentity{
         
         virtual ~Factoryentity(){
             --total_count;
-            print_fmt("The floor device {} has been removed", name);
+            print_fmt("\nThe floor device {} has been removed\n", name);
         }
 
         virtual void increase_tick()=0;  // virtual functions set to 0, meaning the other derived module MUST use this function or else wont compile 
