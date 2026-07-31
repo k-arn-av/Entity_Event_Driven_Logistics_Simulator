@@ -1,6 +1,7 @@
 #pragma once
 #include "autobots.hpp"
 #include "processinghub.hpp"
+#include "warehouse.hpp"
 #include <memory>
 #include <utility>
 #include <vector>
@@ -8,7 +9,8 @@
 class factorymanager{
     private:
         std::vector<std::unique_ptr<Factoryentity>>entities;
-        size_t current_tick=0; //univeral clock for the factory, increases without any 
+        size_t current_tick=0; //univeral clock for the factory
+        std::unique_ptr<warehouse> factory_warehouse; // included warehouse to manage
     
     public:
 
@@ -26,6 +28,12 @@ class factorymanager{
         } // returns by reference to give access only, no ownership
 
         void broadcast_event(EntityEvent event_type);
+
+        void set_warehouse(std::unique_ptr<warehouse> wh){
+            factory_warehouse = std::move(wh);
+        }   
+
+        warehouse* get_warehouse() const {return factory_warehouse.get();}
 
         void route_package(std::unique_ptr<package> pkg);
 

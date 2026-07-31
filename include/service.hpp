@@ -53,9 +53,10 @@ class chargingStation: public serviceStation{
         bool is_charging=is_servicing;
         double incoming_powerAC_watts=100; //100 W AC
         double conversion_efficiency=0.92;
+
     
     public:
-        chargingStation(std::string name, size_t cap, serviceType t=serviceType::CHARGING): serviceStation(std::move(name),cap, t){}
+        chargingStation(std::string name, size_t cap): serviceStation(std::move(name),cap, serviceType::CHARGING){}
 
         double convert_to_DC()const;
 

@@ -38,7 +38,6 @@ class package{
             
     
     public:
-
         package(const std::string& pN,const std::string& sN, const std::string& rN, double w, const Content_type cont, std::string& destinationid)
         : package_name(pN), sender_name(sN), receiver_name(rN), weight(w), content_type(cont), package_destinationID(destinationid){
 
@@ -56,6 +55,7 @@ class package{
         size_t getPriority()const {return priority;}
         std::string getDestinationID()const {return package_destinationID;}
 
+
         //setters
         void setContentType(const Content_type& newtype){
             content_type=newtype;
@@ -63,7 +63,7 @@ class package{
         }
         void setStatus(const package_status& newstatus){status=newstatus;}
         void setWeight(double newWeight){weight=newWeight;}
-
+        void setDestinationID(std::string newID) {package_destinationID=newID;}
         void set_priority(size_t newPriority){priority=newPriority;}
 
         
