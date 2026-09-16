@@ -1,6 +1,6 @@
 # Entity simulator benchmark
 
-This folder is an isolated benchmark executable. It links the production simulator sources directly, but does not modify or run `src/main.cpp`.
+This folder is an isolated benchmark executable. 
 
 ## Build and run
 
@@ -12,7 +12,7 @@ cmake --build build --config Release
 .\build\entity_simulator_benchmark.exe --entities 1000 --ticks 2000 --events 2000
 ```
 
-The output is deliberately key/value based so the values can be copied into a resume. `stable=true` means the complete workload finished without an exception or failed invariant. Increase `--entities` until the workload no longer meets the chosen stability budget, then report the largest passing value. The benchmark reports a median across the requested samples.
+`stable=true` means the complete workload finished without an exception or failed invariant. Increase `--entities` until the workload no longer meets the chosen stability budget, then report the largest passing value. The benchmark reports a median across the requested samples.
 
 ## Valgrind
 
